@@ -5,4 +5,5 @@ RUN pip3 install -r requirements.txt
 
 COPY embeddings.py /app/embeddings.py
 EXPOSE 7070
-CMD ["uvicorn", "embeddings:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "7070"]
+
+CMD ["granian", "embeddings:app", "--interface", "asgi", "--host", "0.0.0.0", "--port", "7070"]

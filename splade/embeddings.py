@@ -122,7 +122,3 @@ async def sparse_encode(encodingRequest: SparseEncodeRequest):
             "status": 200,
         }
     )
-
-
-if __name__ == "__main__":
-    uvicorn.run("embeddings:app", host="0.0.0.0", port=7070, reload=True)
