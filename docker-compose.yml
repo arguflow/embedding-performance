@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  splade-embeddings:
+    image: arguflow/splade-embeddings
+    build: ./splade/
+    networks:
+      - app-network
+    ports:
+      - 7070:7070
+
+networks:
+  app-network:
+    driver: bridge
