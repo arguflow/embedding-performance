@@ -29,6 +29,8 @@ else:
 angle.set_prompt(Prompts.C)
 # Tokenize sentences
 query_model.to(device)
+query_tokenizer.to(device)
+doc_tokenizer.to(device)
 doc_model.to(device)
 
 
