@@ -37,4 +37,6 @@ runcmd:
   - docker -version
   - sudo systemctl enable docker.service
   - sudo systemctl start docker
-  - docker run -itd -p 80:7070 arguflow/splade-embeddings
+  - git clone https://github.com/arguflow/embedding-performance
+  - cd embedding-performance
+  - docker compose up --build splade-embeddings

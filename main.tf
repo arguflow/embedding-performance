@@ -19,12 +19,12 @@ variable ssh_pub_key_file {
 
 variable "server-machine-type" {
   type = string
-  default = "t3.medium"
+  default = "g3.4xlarge"
 }
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "us-west-1"
+  region = "us-east-2"
 }
 
 resource "aws_vpc" "vpc" {
@@ -84,7 +84,7 @@ resource "aws_security_group" "sg_22_80" {
 }
 
 resource "aws_instance" "splade-embeddings" {
-  ami           = "ami-0f2f1e057f044afec"               # Amazon linux
+  ami           = "ami-0021ff8f743f5c246"               # Amazon linux
   instance_type = var.server-machine-type
   user_data     = templatefile("./splade.yaml", {ssh_key: file(var.ssh_pub_key_file)}) # Cloudinit
 
@@ -98,7 +98,7 @@ resource "aws_instance" "splade-embeddings" {
 }
 
 resource "aws_instance" "side-car" {
-  ami           = "ami-0f2f1e057f044afec"          # Amazon linux
+  ami           = "ami-0021ff8f743f5c246"          # Amazon linux
   instance_type = "t3.large"
   user_data     = templatefile("./sidecar.yaml", {ssh_key: file(var.ssh_pub_key_file)}) # Cloudinit
 

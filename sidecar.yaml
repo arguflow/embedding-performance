@@ -27,13 +27,6 @@ users:
       - ${ssh_key}
 
 runcmd:
-  - sudo yum update -y
-  - sudo amazon-linux-extras enable docker
-  - sudo amazon-linux-extras install collectd
-  - echo "installing docker"
-  - sudo yum install docker -y
-  - sudo usermod -aG docker ec2-user
-  - newgrp docker
-  - docker -version
-  - sudo systemctl enable docker.service
-  - sudo systemctl start docker
+  - sudo apt-get update -y
+  - sudo apt-get install -y luajit
+  - git clone https://github.com/wg/wrk

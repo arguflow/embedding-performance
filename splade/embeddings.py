@@ -62,8 +62,6 @@ def compute_vector(text, tokenizer, model):
 class EncodeRequest(BaseModel):
     input: str
     model: str
-    encoding_format: Optional[str] = None
-    user: Optional[str] = None
 
 
 @app.post("/embeddings")
@@ -72,6 +70,7 @@ async def encode(encodingRequest: EncodeRequest):
     sentence_embeddings = angle.encode(
         {"text": encodingRequest.input}, device=device, to_numpy=True
     )
+    print("success");
     return JSONResponse(
         content={
             "object": "list",
@@ -116,6 +115,7 @@ async def sparse_encode(encodingRequest: SparseEncodeRequest):
         )
     indices = vec.nonzero().squeeze().cpu().tolist()
     values = vec[indices].cpu().tolist()
+    print("success");
     return JSONResponse(
         content={
             "embeddings": list(zip(indices, values)),
