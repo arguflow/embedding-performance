@@ -84,7 +84,7 @@ resource "aws_security_group" "sg_22_80" {
 }
 
 resource "aws_instance" "splade-embeddings" {
-  ami           = "ami-0021ff8f743f5c246"               # Amazon linux
+  ami           =  "ami-0464473b75a13771a" # Deep Learning AMI (Ubuntu 20.04) Version 36.0
   instance_type = var.server-machine-type
   user_data     = templatefile("./splade.yaml", {ssh_key: file(var.ssh_pub_key_file)}) # Cloudinit
 
