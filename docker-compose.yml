@@ -8,6 +8,10 @@ services:
       - app-network
     ports:
       - 7070:7070
+  wrk:
+    image: ruslanys/wrk
+    volumes:
+      - ./scripts:/tmp/wrk/scripts/
 
 networks:
   app-network:

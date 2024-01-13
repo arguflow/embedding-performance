@@ -66,6 +66,7 @@ class EncodeRequest(BaseModel):
 
 @app.post("/embeddings")
 async def encode(encodingRequest: EncodeRequest):
+    print("recv");
     # normalize embeddings
     sentence_embeddings = angle.encode(
         {"text": encodingRequest.input}, device=device, to_numpy=True
@@ -86,7 +87,8 @@ async def encode(encodingRequest: EncodeRequest):
                 "prompt_tokens": 0,
                 "total_tokens": 0,
             },
-        }
+        },
+        status_code=200,
     )
 
 
@@ -97,6 +99,7 @@ class SparseEncodeRequest(BaseModel):
 
 @app.post("/sparse_encode")
 async def sparse_encode(encodingRequest: SparseEncodeRequest):
+    print("recv");
     vec = []
     if encodingRequest.encode_type == "doc":
         vec = compute_vector(
@@ -111,7 +114,8 @@ async def sparse_encode(encodingRequest: SparseEncodeRequest):
             content={
                 "embeddings": [],
                 "status": 400,
-            }
+            },
+            status_code=400
         )
     indices = vec.nonzero().squeeze().cpu().tolist()
     values = vec[indices].cpu().tolist()
@@ -120,5 +124,6 @@ async def sparse_encode(encodingRequest: SparseEncodeRequest):
         content={
             "embeddings": list(zip(indices, values)),
             "status": 200,
-        }
+        },
+        status_code=200
     )
