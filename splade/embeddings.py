@@ -29,8 +29,6 @@ else:
 angle.set_prompt(Prompts.C)
 # Tokenize sentences
 query_model.to(device)
-query_tokenizer.to(device)
-doc_tokenizer.to(device)
 doc_model.to(device)
 
 
@@ -51,6 +49,7 @@ def compute_vector(text, tokenizer, model):
     torch.Tensor: Computed vector.
     """
     tokens = tokenizer(text, return_tensors="pt")
+    tokens = tokens.to(device)
     output = model(**tokens)
     logits, attention_mask = output.logits, tokens.attention_mask
     relu_log = torch.log(1 + torch.relu(logits))
