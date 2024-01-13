@@ -66,12 +66,10 @@ class EncodeRequest(BaseModel):
 
 @app.post("/embeddings")
 async def encode(encodingRequest: EncodeRequest):
-    print("recv");
     # normalize embeddings
     sentence_embeddings = angle.encode(
         {"text": encodingRequest.input}, device=device, to_numpy=True
     )
-    print("success");
     return JSONResponse(
         content={
             "object": "list",
@@ -99,7 +97,6 @@ class SparseEncodeRequest(BaseModel):
 
 @app.post("/sparse_encode")
 async def sparse_encode(encodingRequest: SparseEncodeRequest):
-    print("recv");
     vec = []
     if encodingRequest.encode_type == "doc":
         vec = compute_vector(
@@ -119,7 +116,6 @@ async def sparse_encode(encodingRequest: SparseEncodeRequest):
         )
     indices = vec.nonzero().squeeze().cpu().tolist()
     values = vec[indices].cpu().tolist()
-    print("success");
     return JSONResponse(
         content={
             "embeddings": list(zip(indices, values)),
@@ -127,3 +123,6 @@ async def sparse_encode(encodingRequest: SparseEncodeRequest):
         },
         status_code=200
     )
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=7070)
