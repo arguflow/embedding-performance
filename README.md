@@ -1,7 +1,16 @@
 # hi
 
-This is meant to test the tps and ... of embedding servers
-Using terraform only for the purpose of reproducability, and is 
+This is meant to test the performance of embedding servers
+Using terraform only for the purpose of reproducability.
+
+## Testing Setup
+
+Create a markdown graph
+```mermaid
+graph LR
+    A[side_car] --> B((splade_server))
+    C[side_car] --> D((embedding_server))
+```
 
 ## Setup terraform
 
