@@ -39,21 +39,44 @@ side_car_ip = "<your-side_car-ip>"
 splade_ip = "<your-splade-server-ip>"
 ```
 
+Set up for splade_server
+```sh
+
+ssh dev@<your-side_car-ip>
+
+apt-get install python3.9 python3-is-python python-venv
+
+git clone https://github.com/arguflow/embedding-performance
+cd embedding-performance
+python3 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
+granian embeddings:app --interface asgi --host 0.0.0.0 --port 7070
+```
+
 The side_car_ip is what we will test from
 
+Set up for side_car
 ```sh
 ssh dev@<your-side_car-ip>
-./test.sh <your-splade-server-ip>
-./test.sh <your-embedding-server-ip>
+
+sudo apt-get update -y && sudo apt-get install -y luajit
+git clone https://github.com/wg/wrk
+git clone https://github.com/arguflow/embedding-performance
+cd wrk; make
+cd ../embedding-performance/
+
+./test.sh <your-splade-server-ip>:7070
+./test.sh <your-embedding-server-ip>:7070
 ```
 
-To change the machine type 
-```
-update the server-machine-type
+To change the machine type
+```sh
+update the server-machine-type in main.tf
 ```
 
 To bring down all servers 
 
-```
+```sh
 terraform destroy
 ```

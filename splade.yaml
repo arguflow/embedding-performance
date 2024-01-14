@@ -12,7 +12,7 @@ groups:
 
 system_info:
   default_user:
-    groups: [ec2-user]
+    groups: [dev]
 
 users:
   - default
@@ -21,20 +21,20 @@ users:
     shell: /bin/bash
     primary_group: dev
     sudo: ALL=(ALL) NOPASSWD:ALL
-    groups: [docker, dev, ec2-user]
+    groups: [docker, dev]
     lock_passwd: false
     ssh-authorized-keys:
       - ${ssh_key}
 
 runcmd:
-  - sudo yum update -y
-  - sudo amazon-linux-extras enable docker
-  - sudo amazon-linux-extras install collectd
-  - echo "installing docker"
-  - sudo yum install docker -y
-  - sudo usermod -aG docker ec2-user
-  - newgrp docker
-  - docker -version
-  - sudo systemctl enable docker.service
-  - sudo systemctl start docker
-  - docker run -itd -p 80:7070 arguflow/splade-embeddings
+  - sudo apt-get update -y && sudo apt-get install -y python3.9 python-is-python3 python3-venv
+  - git clone https://github.com/arguflow/embedding-performance
+  - mv embedding-performance/ /home/dev
+  # - echo "installing docker"
+  # - for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+  # - sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  # - sudo usermod -aG docker dev
+  # - newgrp docker
+  # - docker -version
+  # - sudo systemctl enable docker.service
+  # - sudo systemctl start docker
